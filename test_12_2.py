@@ -1,49 +1,8 @@
 import unittest
 from unittest import TestCase
+from test_12_2 import Tournament , Runner
 
 
-class Runner:
-    def __init__(self, name, speed=5):
-        self.name = name
-        self.distance = 0
-        self.speed = speed
-
-    def run(self):
-        self.distance += self.speed * 2
-
-    def walk(self):
-        self.distance += self.speed
-
-    def __str__(self):
-        return self.name
-
-    def __eq__(self, other):
-        if isinstance(other, str):
-            return self.name == other
-        elif isinstance(other, Runner):
-            return self.name == other.name
-
-
-class Tournament:
-    def __init__(self, distance, *participants):
-        self.full_distance = distance
-        self.participants = list(participants)
-
-    def start(self):
-        finishers = {}
-        place = 1
-        while self.participants:
-            for participant in self.participants:
-                participant.run()
-                if participant.distance >= self.full_distance:
-                    finishers[place] = participant
-                    place += 1
-                    self.participants.remove(participant)
-
-        return finishers
-"""
-
-"""
 class TournamentTest(TestCase):
 
     @classmethod
@@ -73,17 +32,12 @@ class TournamentTest(TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        tt_1 = {} ; tt_2 = {} ; tt_3 = {}
-
-        tt_1[1] = cls.all_result[1].get(1).__str__()
-        tt_1[2] = cls.all_result[1].get(2).__str__()
-        tt_2[1] =  cls.all_result[2].get(1).__str__()
-        tt_2[2] = cls.all_result[2].get(2).__str__()
-        tt_3[1] =  cls.all_result[3].get(1).__str__()
-        tt_3[2] = cls.all_result[3].get(2).__str__()
-        tt_3[3] = cls.all_result[3].get(3).__str__()
-
-        print("\n" , tt_1 , "\n" , tt_2 ,"\n" , tt_3)
+        tt_1 = {}
+        for key in cls.all_result.keys():
+            tt_1[key] = {}
+            for k in cls.all_result[key].keys():
+                tt_1[key][k] = cls.all_result[key][k].__str__()
+            print(tt_1[key])
 
 if __name__ == "__main__":
     unittest.main()
